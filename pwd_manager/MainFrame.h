@@ -1,5 +1,6 @@
 #pragma once
 #include <wx/wx.h>
+#include <wx/listctrl.h>
 
 class MainFrame : public wxFrame
 {
@@ -10,15 +11,15 @@ private:
 	void BindEventHandlers();
 	void AddSavedPasswords();
 
-	void Add(wxCommandEvent& evt);
-	void AddPassword();
+	void AddPassword(wxCommandEvent& evt);
 
 	void OnKeyDown(wxKeyEvent& evt);
 	void MovePasswords(int offset);
 	void Swap(int a, int b);
 	void DeletePassword();
-	void OnDeleteButtonClicked(wxCommandEvent& evt);
 	void OnWindowClosed(wxCloseEvent& evt);
+
+	void UpdateEntry();
 
 	void HidePassword(wxCommandEvent& evt);
 
@@ -28,15 +29,16 @@ private:
 	wxTextCtrl* usernameInput;
 	wxTextCtrl* passwordInput;
 	wxButton* addButton;
-	wxButton* deleteButton;
 
 	wxStaticText* websiteHeader;
 	wxStaticText* usernameHeader;
 	wxStaticText* passwordHeader;
 
+	wxListBox* entryListBox;
 	wxListBox* websiteListBox;
 	wxListBox* usernameListBox;
 	wxListBox* passwordListBox;
-	wxCheckListBox* deleteListBox;
+
+	wxListCtrl* passwordList;
 };
 
