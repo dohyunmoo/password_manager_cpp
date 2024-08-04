@@ -1,5 +1,5 @@
 # password_manager_cpp
-Password Manager with C++ and wxWidgets
+Password Manager with C++20 and wxWidgets
 
 ### To run
 
