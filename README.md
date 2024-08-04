@@ -1,2 +1,2 @@
 # password_manager_cpp
-Password Manager with C++
+Password Manager with C++ and wxWidgets
