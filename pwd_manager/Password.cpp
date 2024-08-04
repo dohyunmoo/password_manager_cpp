@@ -6,7 +6,7 @@
 #include <fstream>
 #include <algorithm>
 
-void savePassword(const std::vector<Password>& passwords, const std::string& fileName)
+void SavePassword(const std::vector<Password>& passwords, const std::string& fileName)
 {
 	std::ofstream ostream(fileName);
 	ostream << passwords.size();
@@ -20,7 +20,7 @@ void savePassword(const std::vector<Password>& passwords, const std::string& fil
 	}
 }
 
-std::vector<Password> loadPassword(const std::string& fileName)
+std::vector<Password> LoadPassword(const std::string& fileName)
 {
 	if (!std::filesystem::exists(fileName)) {
 		return std::vector<Password>();

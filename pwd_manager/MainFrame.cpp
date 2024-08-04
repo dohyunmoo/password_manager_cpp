@@ -7,6 +7,7 @@
 MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) {
 	Controls();
 	BindEventHandlers();
+	AddSavedPasswords();
 
 	CreateStatusBar();
 
@@ -21,7 +22,22 @@ void MainFrame::HidePassword(wxCommandEvent& evt)
 void MainFrame::BindEventHandlers()
 {
 	addButton->Bind(wxEVT_BUTTON, &MainFrame::Add, this);
-	deleteButton->Bind(wxEVT_BUTTON, &MainFrame::DeleteButtonClicked, this);
+	deleteButton->Bind(wxEVT_BUTTON, &MainFrame::OnDeleteButtonClicked, this);
+	this->Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnWindowClosed, this);
+}
+
+void MainFrame::AddSavedPasswords()
+{
+	std::vector<Password> passwords = LoadPassword("passwords.txt");
+
+	for (const Password& password : passwords)
+	{
+		int index = websiteListBox->GetCount();
+		websiteListBox->Insert(password.website, index);
+		usernameListBox->Insert(password.username, index);
+		passwordListBox->Insert(password.password, index);
+		deleteListBox->Insert("del", deleteListBox->GetCount());
+	}
 }
 
 void MainFrame::Add(wxCommandEvent& evt)
@@ -54,7 +70,7 @@ void MainFrame::AddPassword()
 	}
 }
 
-void MainFrame::KeyDown(wxKeyEvent& evt)
+void MainFrame::OnKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode()) {
 		case WXK_UP:
@@ -66,7 +82,7 @@ void MainFrame::KeyDown(wxKeyEvent& evt)
 	}
 }
 
-void MainFrame::DeleteButtonClicked(wxCommandEvent& evt) {
+void MainFrame::OnDeleteButtonClicked(wxCommandEvent& evt) {
 	if (deleteListBox->IsEmpty()) {
 		return;
 	}
@@ -78,6 +94,22 @@ void MainFrame::DeleteButtonClicked(wxCommandEvent& evt) {
 	if (result == wxID_YES) {
 		DeletePassword();
 	}
+}
+
+void MainFrame::OnWindowClosed(wxCloseEvent& evt)
+{
+	std::vector<Password> passwords;
+
+	for (int i = 0; i < websiteListBox->GetCount(); i++) {
+		Password password;
+		password.website = websiteListBox->GetString(i).ToStdString();
+		password.username = usernameListBox->GetString(i).ToStdString();
+		password.password = passwordListBox->GetString(i).ToStdString();
+		passwords.push_back(password);
+	}
+
+	SavePassword(passwords, "passwords.txt");
+	evt.Skip();
 }
 
 void MainFrame::DeletePassword()
@@ -134,7 +166,6 @@ void MainFrame::Controls() {
 
 	headlineText = new wxStaticText(panel, wxID_ANY, "Dohyun's Password Manager", wxPoint(0, 22), wxSize(800, -1), wxALIGN_CENTER_HORIZONTAL);
 	headlineText->SetFont(headlineFont);
-	headlineText->SetBackgroundColour(*wxRED);
 
 	int w_width = 200;
 	int up_width = 170;

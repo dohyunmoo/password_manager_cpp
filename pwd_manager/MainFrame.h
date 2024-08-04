@@ -8,15 +8,17 @@ public:
 private:
 	void Controls();
 	void BindEventHandlers();
+	void AddSavedPasswords();
 
 	void Add(wxCommandEvent& evt);
 	void AddPassword();
 
-	void KeyDown(wxKeyEvent& evt);
+	void OnKeyDown(wxKeyEvent& evt);
 	void MovePasswords(int offset);
 	void Swap(int a, int b);
 	void DeletePassword();
-	void DeleteButtonClicked(wxCommandEvent& evt);
+	void OnDeleteButtonClicked(wxCommandEvent& evt);
+	void OnWindowClosed(wxCloseEvent& evt);
 
 	void HidePassword(wxCommandEvent& evt);
 

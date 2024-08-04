@@ -11,5 +11,5 @@ public:
 	bool isHidden = true;
 };
 
-void savePassword(const std::vector<Password>& passwords, const std::string& fileName);
-std::vector<Password> loadPassword(const std::string& fileName);
+void SavePassword(const std::vector<Password>& passwords, const std::string& fileName);
+std::vector<Password> LoadPassword(const std::string& fileName);
