@@ -6,7 +6,7 @@
 #include "Password.h"
 #include <format>
 
-MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) {
+MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX)) {
 	Controls();
 	BindEventHandlers();
 	AddSavedPasswords();
@@ -98,7 +98,7 @@ void MainFrame::OnWindowClosed(wxCloseEvent& evt)
 {
 	std::vector<Password> passwords;
 
-	for (int i = 0; i < websiteListBox->GetCount(); i++) {
+	for (unsigned int i = 0; i < websiteListBox->GetCount(); i++) {
 		Password password;
 		password.website = websiteListBox->GetString(i).ToStdString();
 		password.username = usernameListBox->GetString(i).ToStdString();
@@ -112,7 +112,7 @@ void MainFrame::OnWindowClosed(wxCloseEvent& evt)
 
 void MainFrame::UpdateEntry()
 {
-	for (int i = 0; i < entryListBox->GetCount(); i++) {
+	for (unsigned int i = 0; i < entryListBox->GetCount(); i++) {
 		entryListBox->SetString(i, wxString::Format(wxT("%i"), i + 1));
 	}
 }
@@ -151,7 +151,7 @@ void MainFrame::MovePasswords(int offset)
 		return;
 	}
 
-	int newIndex = selectedIndex + offset;
+	unsigned int newIndex = selectedIndex + offset;
 
 	if (newIndex >= 0 && newIndex < websiteListBox->GetCount()) {
 		Swap(selectedIndex, newIndex);
