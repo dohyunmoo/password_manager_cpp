@@ -59,7 +59,7 @@ std::vector<Password> LoadPassword(const std::string& fileName)
 
 	const std::string server = "tcp://127.0.0.1:3306";
 	const std::string username = "root";
-	const std::string password = "Thedoorisclo$ed";
+	const std::string password = "";
 
 	std::vector<Password> passwords;
 
